@@ -12,10 +12,10 @@ URL:        http://archive.notam02.no/arkiv/src/
 # jack_capture_gui2 is under BSD License
 License:    GPLv2+ and BSD
 Group:      Sound
-Source:    %name-%version.tar.gz
+Source:     %name-%version.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
-BuildRequires:  gtk2-devel
+BuildRequires:  gtk2-devel jackit-devel
 BuildRequires:  libsndfile-devel libogg-devel libflac-devel
 BuildRequires:  meterbridge
 
