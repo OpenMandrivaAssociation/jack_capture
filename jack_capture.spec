@@ -1,7 +1,7 @@
 %define name    jack_capture
 
-%define version 0.9.44
-%define release %mkrel 2
+%define version 0.9.57
+%define release %mkrel 1
 
 Summary:    Simple JACK audiofile recorder-encoder
 Name:       %name
@@ -9,8 +9,7 @@ Version:    %version
 Release:    %release
 URL:        http://archive.notam02.no/arkiv/src/
 
-# jack_capture_gui2 is under BSD License
-License:    GPLv2+ and BSD
+License:    GPLv2+
 Group:      Sound
 Source:     %name-%version.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -19,7 +18,7 @@ BuildRequires:  gtk2-devel jackit-devel
 BuildRequires:  libsndfile-devel libogg-devel libflac-devel
 BuildRequires:  meterbridge
 
-Requires:   meterbridge Xdialog
+Requires:   meterbridge
 
 %description
 Small audio file recorder with on-the-fly encoding capabilities for the 
@@ -51,26 +50,12 @@ Type=Application
 X-Desktop-File-Install-Version=0.15
 EOF
 
-cat > %buildroot%_datadir/applications/jack_capture_gui.desktop << EOF
-[Desktop Entry]
-Name=Jack_capture_gui
-Comment=Simple JACK audiofile recorder-encoder
-Exec=jack_capture_gui
-Icon=sound_section
-Categories=Audio;X-MandrivaLinux-Sound;
-Terminal=false
-Type=Application
-X-Desktop-File-Install-Version=0.15
-EOF
-
 %clean
 rm -rf %buildroot
 
 %files
 %defattr(-,root,root)
 %_bindir/jack_capture
-%_bindir/jack_capture_gui
 %_bindir/jack_capture_gui2
-%_datadir/applications/jack_capture_gui.desktop
 %_datadir/applications/jack_capture_gui2.desktop
 %doc README
