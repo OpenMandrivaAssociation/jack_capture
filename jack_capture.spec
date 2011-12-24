@@ -1,12 +1,7 @@
-%define name    jack_capture
-
-%define version 0.9.57
-%define release %mkrel 1
-
 Summary:    Simple JACK audiofile recorder-encoder
-Name:       %name
-Version:    %version
-Release:    %release
+Name:       jack_capture
+Version:    0.9.61
+Release:    1
 URL:        http://archive.notam02.no/arkiv/src/
 
 License:    GPLv2+
@@ -21,9 +16,9 @@ BuildRequires:  meterbridge
 Requires:   meterbridge
 
 %description
-Small audio file recorder with on-the-fly encoding capabilities for the 
-JACK Audio Connection Kit. Jack_capture comes with two control GUIs, one 
-of which is deliberately simple. Supported save file formats are wav 
+Small audio file recorder with on-the-fly encoding capabilities for the
+JACK Audio Connection Kit. Jack_capture comes with two control GUIs, one
+of which is deliberately simple. Supported save file formats are wav
 (with 4GB limit bypass), ogg, flac, wav, wavex, au, aiff and raw.
 
 %prep
@@ -33,10 +28,14 @@ perl -pi -e 's/-march=native//g' Makefile
 
 %build
 %make
+#we have to build the legacy gui program at our own risk
+make jack_capture_gui2
 
 %install
 rm -rf %{buildroot}
 %makeinstall_std
+install jack_capture_gui2 %{buildroot}%{_bindir}/
+
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %buildroot%_datadir/applications/jack_capture_gui2.desktop << EOF
 [Desktop Entry]
