@@ -10,7 +10,7 @@ BuildRequires:	gtk+2.0-devel
 BuildRequires:	jackit-devel
 BuildRequires:	sndfile-devel
 BuildRequires:	libogg-devel
-BuildRequires:	libflac-devel
+BuildRequires:	flac-devel
 BuildRequires:	meterbridge
 Requires:	meterbridge
 
