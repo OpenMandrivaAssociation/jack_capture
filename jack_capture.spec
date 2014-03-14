@@ -6,7 +6,7 @@ URL:		http://archive.notam02.no/arkiv/src/
 License:		GPLv2+
 Group:		Sound
 Source0:		%{name}-%{version}.tar.gz
-BuildRequires:	gtk2-devel
+BuildRequires:	gtk+2.0-devel
 BuildRequires:	jackit-devel
 BuildRequires:	sndfile-devel
 BuildRequires:	libogg-devel
