@@ -1,3 +1,5 @@
+%define debug_package %{nil}
+
 Summary:		Simple JACK audiofile recorder-encoder
 Name:		jack_capture
 Version:		0.9.61
