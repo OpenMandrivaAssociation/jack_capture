@@ -3,7 +3,7 @@
 Summary:		Simple JACK audiofile recorder-encoder
 Name:		jack_capture
 Version:		0.9.61
-Release:		2
+Release:		3
 URL:		http://archive.notam02.no/arkiv/src/
 License:		GPLv2+
 Group:		Sound
