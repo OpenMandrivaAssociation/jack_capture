@@ -2,12 +2,12 @@
 
 Summary:		Simple JACK audiofile recorder-encoder
 Name:		jack_capture
-Version:		0.9.61
-Release:		3
-URL:		http://archive.notam02.no/arkiv/src/
+Version:		0.9.73
+Release:		1
+URL:		https://archive.notam02.no/arkiv/src/
 License:		GPLv2+
 Group:		Sound
-Source0:		%{name}-%{version}.tar.gz
+Source0:		https://archive.notam02.no/arkiv/src/%{name}-%{version}.tar.gz
 BuildRequires:	gtk+2.0-devel
 BuildRequires:	jackit-devel
 BuildRequires:	sndfile-devel
