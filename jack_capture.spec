@@ -1,20 +1,33 @@
-%define debug_package %{nil}
+%global	debug_package %{nil}
+
+%define	gitdate	20230104
+
+# The GUI is gtk+-2.0 and won't build ATM
+%bcond_with gui
 
 Summary:		Simple JACK audiofile recorder-encoder
 Name:		jack_capture
 Version:		0.9.73
 Release:		1
-URL:		https://archive.notam02.no/arkiv/src/
 License:		GPLv2+
-Group:		Sound
-Source0:		https://archive.notam02.no/arkiv/src/%{name}-%{version}.tar.gz
-BuildRequires:	gtk+2.0-devel
-BuildRequires:	jackit-devel
-BuildRequires:	sndfile-devel
-BuildRequires:	libogg-devel
-BuildRequires:	flac-devel
-BuildRequires:	meterbridge
-Requires:	meterbridge
+Group:	Sound
+Url:		https://github.com/kmatheussen/jack_capture
+#Source0:	https://archive.notam02.no/arkiv/src/%%{name}-%%{version}.tar.gz
+# Use git HEAD from a more live fork
+Source0:	%{name}-%{gitdate}.tar.xz
+Patch0:	jack_capture-0.9.73-fix-Makefile.patch
+BuildRequires:	gcc
+BuildRequires:	pkgconfig(flac)
+%if %{with gui}
+BuildRequires:	pkgconfig(gtk+-2.0)
+%endif
+BuildRequires:	pkgconfig(jack)
+BuildRequires:	pkgconfig(lame)
+BuildRequires:	pkgconfig(liblo)
+BuildRequires:	pkgconfig(ogg)
+BuildRequires:	pkgconfig(sndfile)
+# Not provided yet; perhaps not used
+Recommends:	meterbridge
 
 %description
 Small audio file recorder with on-the-fly encoding capabilities for the
@@ -22,66 +35,45 @@ JACK Audio Connection Kit. Jack_capture comes with two control GUIs, one
 of which is deliberately simple. Supported save file formats are wav
 (with 4GB limit bypass), ogg, flac, wav, wavex, au, aiff and raw.
 
+%files
+%doc README
+%{_bindir}/%{name}
+%if %{with gui}
+%{_bindir}/%{name}_gui2
+%{_datadir}/applications/%{name}_gui2.desktop
+%endif
+
+#-----------------------------------------------------------------------------
 
 %prep
-%setup -q
-perl -pi -e 's/usr\/local/usr/g' Makefile
-perl -pi -e 's/-march=native//g' Makefile
+%autosetup -p1 -n %{name}-%{gitdate}
 
 
 %build
-%make
-#we have to build the legacy gui program at our own risk
-make jack_capture_gui2
+%set_build_flags
+%make_build
+
+%if %{with gui}
+# We have to build the legacy gui program at our own risk
+make %{name}_gui2
+%endif
 
 
 %install
 %makeinstall_std
-install jack_capture_gui2 %{buildroot}%{_bindir}/
+
+%if %{with gui}
+install %{name}_gui2 %{buildroot}%{_bindir}/
 
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %buildroot%_datadir/applications/jack_capture_gui2.desktop << EOF
 [Desktop Entry]
-Name=Jack_capture_gui2
-Comment=Simple JACK audiofile recorder-encoder
-Exec=jack_capture_gui2
+Name=%{name}_gui2
+Comment=Simple JACK audiofile recorder-encoder GTK GUI
+Exec=%{name}_gui2
 Icon=sound_section
-Categories=Audio;X-MandrivaLinux-Sound;
+Categories=Audio;X-OpenMandrivaLinux-Sound;
 Terminal=false
 Type=Application
-X-Desktop-File-Install-Version=0.15
 EOF
-
-
-%files
-%doc README
-%{_bindir}/jack_capture
-%{_bindir}/jack_capture_gui2
-%{_datadir}/applications/jack_capture_gui2.desktop
-
-
-%changelog
-* Wed Oct 31 2012 Giovanni Mariani <mc2374àmclink.it> 0.9.61-2
-- Dropped BuildRoot, %%mkrel, %%defattr and %%clean section
-- Fixed Breq for libsndfile devel package
-
-* Sat Dec 24 2011 Frank Kober <emuse@mandriva.org> 0.9.61-1
-+ Revision: 745017
-- new version 0.9.61
-
-* Mon Dec 06 2010 Frank Kober <emuse@mandriva.org> 0.9.57-1mdv2011.0
-+ Revision: 612952
-- new version 0.9.57
-  o old jack_capture_gui dropped (no longer install target)
-  o license updated
-
-* Mon Dec 06 2010 Oden Eriksson <oeriksson@mandriva.com> 0.9.44-2mdv2011.0
-+ Revision: 612435
-- the mass rebuild of 2010.1 packages
-
-* Fri Apr 02 2010 Frank Kober <emuse@mandriva.org> 0.9.44-1mdv2010.1
-+ Revision: 530793
-- add missing BR
-- import jack_capture
-
-
+%endif
