@@ -17,6 +17,7 @@ Url:		https://github.com/kmatheussen/jack_capture
 Source0:	%{name}-%{gitdate}.tar.xz
 Patch0:	jack_capture-0.9.73-fix-Makefile.patch
 BuildRequires:	gcc
+BuildRequires:	atomic-devel
 BuildRequires:	pkgconfig(flac)
 %if %{with gui}
 BuildRequires:	pkgconfig(gtk+-2.0)
