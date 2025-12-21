@@ -16,6 +16,7 @@ Url:		https://github.com/kmatheussen/jack_capture
 # Use git HEAD from a more live fork
 Source0:	%{name}-%{gitdate}.tar.xz
 Patch0:	jack_capture-0.9.73-fix-Makefile.patch
+BuildRequires:	make
 BuildRequires:	gcc
 BuildRequires:	atomic-devel
 BuildRequires:	pkgconfig(flac)
