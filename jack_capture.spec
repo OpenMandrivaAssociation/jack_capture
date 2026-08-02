@@ -7,7 +7,7 @@
 
 Summary:		Simple JACK audiofile recorder-encoder
 Name:		jack_capture
-Version:		0.9.73
+Version:		0.9.73post1
 Release:		1
 License:		GPLv2+
 Group:	Sound
@@ -15,7 +15,7 @@ Url:		https://github.com/kmatheussen/jack_capture
 #Source0:	https://archive.notam02.no/arkiv/src/%%{name}-%%{version}.tar.gz
 # Use git HEAD from a more live fork
 Source0:	%{name}-%{gitdate}.tar.xz
-Patch0:	jack_capture-0.9.73-fix-Makefile.patch
+Patch0:	jack_capture-0.9.73post1-fix-Makefile.patch
 BuildRequires:	make
 BuildRequires:	gcc
 BuildRequires:	atomic-devel
